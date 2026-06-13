@@ -10,77 +10,29 @@ mod pages;
 
 // Top-Level pages
 use crate::pages::home::Home;
+use crate::pages::login::LoginPage;
+use crate::pages::not_found::NotFound;
+use crate::components::theme_toggle::ThemeToggle;
 
-/// An app router which renders the homepage and handles 404's
-use reactive_stores::Store;
-
-#[derive(Store, Debug, Clone)]
-pub struct Data {
-    #[store(key: String = |row| row.key.clone())]
-    rows: Vec<DatabaseEntry>,
-}
-
-#[derive(Store, Debug, Clone)]
-struct DatabaseEntry {
-    key: String,
-    value: i32,
-}
-
+/// 主应用组件
 #[component]
 pub fn App() -> impl IntoView {
-    let (name, set_name) = signal("Controlled".to_string());
-    let email = RwSignal::new("".to_string());
-    let favorite_color = RwSignal::new("red".to_string());
-    let spam_me = RwSignal::new(true);
+    // 提供元数据支持
+    provide_meta_context();
 
     view! {
-        <input type="text"
-            bind:value=(name, set_name)
-        />
-        <input type="email"
-            bind:value=email
-        />
-        <label>
-            "Please send me lots of spam email."
-            <input type="checkbox"
-                bind:checked=spam_me
-            />
-        </label>
-        <fieldset>
-            <legend>"Favorite color"</legend>
-            <label>
-                "Red"
-                <input
-                    type="radio"
-                    name="color"
-                    value="red"
-                    bind:group=favorite_color
-                />
-            </label>
-            <label>
-                "Green"
-                <input
-                    type="radio"
-                    name="color"
-                    value="green"
-                    bind:group=favorite_color
-                />
-            </label>
-            <label>
-                "Blue"
-                <input
-                    type="radio"
-                    name="color"
-                    value="blue"
-                    bind:group=favorite_color
-                />
-            </label>
-        </fieldset>
-        <p>"Your favorite color is " {favorite_color} "."</p>
-        <p>"Name is: " {name}</p>
-        <p>"Email is: " {email}</p>
-        <Show when=move || spam_me.get()>
-            <p>"You’ll receive cool bonus content!"</p>
-        </Show>
+        <Stylesheet id="leptos" href="/pkg/memory-seek-frontend.css" />
+        <Title text="Memory Seek" />
+        <Meta name="description" content="探索你的记忆" />
+
+        <Router>
+            <div class="app-container">
+                <ThemeToggle />
+                <Routes fallback=NotFound>
+                    <Route path=path!("/") view=Home />
+                    <Route path=path!("/login") view=LoginPage />
+                </Routes>
+            </div>
+        </Router>
     }
 }

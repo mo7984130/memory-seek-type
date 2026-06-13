@@ -24,10 +24,29 @@ fn validate_username(username: &str) -> Option<String> {
 
 /// 验证邮箱格式
 fn validate_email(email: &str) -> Option<String> {
-    if !email.contains('@') || !email.contains('.') || email.len() < 5 {
-        Some("请输入有效的邮箱地址".to_string())
-    } else {
+    let at_pos = email.find('@');
+    let dot_pos = email.rfind('.');
+    if let (Some(at), Some(dot)) = (at_pos, dot_pos) {
+        // @ must come before .
+        if at >= dot {
+            return Some("请输入有效的邮箱地址".to_string());
+        }
+        // both sides of @ must be non-empty
+        if at == 0 || at == email.len() - 1 {
+            return Some("请输入有效的邮箱地址".to_string());
+        }
+        // domain part (after @) must have at least one .
+        let domain = &email[at + 1..];
+        if domain.find('.').is_none() || domain.starts_with('.') || domain.ends_with('.') {
+            return Some("请输入有效的邮箱地址".to_string());
+        }
+        // no consecutive dots
+        if email.contains("..") {
+            return Some("请输入有效的邮箱地址".to_string());
+        }
         None
+    } else {
+        Some("请输入有效的邮箱地址".to_string())
     }
 }
 
@@ -49,10 +68,10 @@ fn validate_email_code(code: &str) -> Option<String> {
     }
 }
 
-/// 验证邀请码：恰好6位
+/// 验证邀请码：恰好6位字母数字
 fn validate_inviter_code(code: &str) -> Option<String> {
-    if code.len() != 6 {
-        Some("邀请码需要6位".to_string())
+    if code.len() != 6 || !code.chars().all(|c| c.is_ascii_alphanumeric()) {
+        Some("邀请码需要6位字母或数字".to_string())
     } else {
         None
     }

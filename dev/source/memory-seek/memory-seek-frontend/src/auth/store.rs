@@ -32,7 +32,7 @@ fn remove_storage_item(key: &str) {
     if let Some(s) = window()
         .and_then(|w| w.local_storage().ok().flatten())
     {
-        let _ = s.delete(key);
+        let _ = s.remove_item(key);
     }
 }
 

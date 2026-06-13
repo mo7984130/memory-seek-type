@@ -31,6 +31,9 @@ web-sys = { version = "0.3", features = [
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
+# Timer for email code countdown
+gloo-timers = { version = "0.3", features = ["futures"] }
+
 # Shared types with backend
 memory-seek-type = { path = "../memory-seek-type" }
 

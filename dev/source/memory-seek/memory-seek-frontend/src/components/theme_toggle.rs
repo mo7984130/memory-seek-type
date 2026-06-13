@@ -3,6 +3,8 @@
 use leptos::prelude::*;
 use web_sys::window;
 
+const KEY_THEME: &str = "ms_theme";
+
 /// 主题模式
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Theme {
@@ -31,7 +33,7 @@ fn get_system_theme() -> Theme {
 fn get_stored_theme() -> Option<Theme> {
     window()
         .and_then(|w| w.local_storage().ok().flatten())
-        .and_then(|s| s.get_item("ms_theme").ok().flatten())
+        .and_then(|s| s.get_item(KEY_THEME).ok().flatten())
         .map(|v| match v.as_str() {
             "dark" => Theme::Dark,
             _ => Theme::Light,
@@ -47,7 +49,7 @@ fn apply_theme(theme: Theme) {
     }
     // 保存到 localStorage
     if let Some(s) = window().and_then(|w| w.local_storage().ok().flatten()) {
-        let _ = s.set_item("ms_theme", theme.as_str());
+        let _ = s.set_item(KEY_THEME, theme.as_str());
     }
 }
 

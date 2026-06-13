@@ -12,6 +12,71 @@ enum ActiveTab {
     Register,
 }
 
+/// 验证用户名：4-20个字符
+fn validate_username(username: &str) -> Option<String> {
+    let len = username.chars().count();
+    if len < 4 || len > 20 {
+        Some("用户名需要4-20个字符".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证邮箱格式
+fn validate_email(email: &str) -> Option<String> {
+    if !email.contains('@') || !email.contains('.') || email.len() < 5 {
+        Some("请输入有效的邮箱地址".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证密码：至少6个字符
+fn validate_password(password: &str) -> Option<String> {
+    if password.len() < 6 {
+        Some("密码至少需要6个字符".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证邮箱验证码：恰好6位
+fn validate_email_code(code: &str) -> Option<String> {
+    if code.len() != 6 || !code.chars().all(|c| c.is_ascii_digit()) {
+        Some("验证码需要6位数字".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证邀请码：恰好6位
+fn validate_inviter_code(code: &str) -> Option<String> {
+    if code.len() != 6 {
+        Some("邀请码需要6位".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证昵称：1-20个字符
+fn validate_nickname(nickname: &str) -> Option<String> {
+    let len = nickname.chars().count();
+    if len < 1 || len > 20 {
+        Some("昵称需要1-20个字符".to_string())
+    } else {
+        None
+    }
+}
+
+/// 验证登录账号：不为空
+fn validate_login_account(account: &str) -> Option<String> {
+    if account.trim().is_empty() {
+        Some("请填写账号".to_string())
+    } else {
+        None
+    }
+}
+
 /// 登录/注册页面组件
 #[component]
 pub fn LoginPage() -> impl IntoView {
@@ -53,6 +118,23 @@ pub fn LoginPage() -> impl IntoView {
     let nav = StoredValue::new(navigate);
 
     view! {
+        <ErrorBoundary fallback=|errors| {
+            view! {
+                <h1>"Uh oh! Something went wrong!"</h1>
+
+                <p>"Errors: "</p>
+                <ul>
+                    {move || {
+                        errors
+                            .get()
+                            .into_iter()
+                            .map(|(_, e)| view! { <li>{e.to_string()}</li> })
+                            .collect_view()
+                    }}
+
+                </ul>
+            }
+        }>
         <div class="login-page">
             <div class="login-card">
                 <div class="login-header">
@@ -90,8 +172,10 @@ pub fn LoginPage() -> impl IntoView {
                             let account = login_account.get_untracked();
                             let password = login_password.get_untracked();
 
-                            if account.is_empty() || password.is_empty() {
-                                set_login_error.set(Some("请填写账号和密码".to_string()));
+                            if let Some(err) = validate_login_account(&account)
+                                .or_else(|| validate_password(&password))
+                            {
+                                set_login_error.set(Some(err));
                                 set_login_loading.set(false);
                                 return;
                             }
@@ -182,10 +266,14 @@ pub fn LoginPage() -> impl IntoView {
                                     let inviter_code = reg_inviter_code.get_untracked();
                                     let email_code = reg_email_code.get_untracked();
 
-                                    if username.is_empty() || email.is_empty() || password.is_empty()
-                                        || nickname.is_empty() || inviter_code.is_empty() || email_code.is_empty()
+                                    if let Some(err) = validate_username(&username)
+                                        .or_else(|| validate_email(&email))
+                                        .or_else(|| validate_password(&password))
+                                        .or_else(|| validate_nickname(&nickname))
+                                        .or_else(|| validate_inviter_code(&inviter_code))
+                                        .or_else(|| validate_email_code(&email_code))
                                     {
-                                        set_reg_error.set(Some("请填写所有字段".to_string()));
+                                        set_reg_error.set(Some(err));
                                         set_reg_loading.set(false);
                                         return;
                                     }
@@ -234,8 +322,8 @@ pub fn LoginPage() -> impl IntoView {
                                                 ev.prevent_default();
                                                 let email = reg_email.get_untracked();
 
-                                                if email.is_empty() {
-                                                    set_reg_error.set(Some("请先填写邮箱".to_string()));
+                                                if let Some(err) = validate_email(&email) {
+                                                    set_reg_error.set(Some(err));
                                                     return;
                                                 }
 
@@ -352,5 +440,6 @@ pub fn LoginPage() -> impl IntoView {
                 </Show>
             </div>
         </div>
+        </ErrorBoundary>
     }
 }

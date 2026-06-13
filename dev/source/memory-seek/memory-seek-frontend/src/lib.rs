@@ -4,6 +4,7 @@ use leptos_router::{components::*, path};
 
 // Modules
 mod api;
+mod auth;
 mod components;
 mod pages;
 

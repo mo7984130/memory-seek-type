@@ -40,7 +40,6 @@ memory-seek-type = { path = "../memory-seek-type" }
 [dev-dependencies]
 wasm-bindgen = "0.2"
 wasm-bindgen-test = "0.3"
-web-sys = { version = "0.3", features = ["Document", "Window"] }
 
 
 [profile.release]

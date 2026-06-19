@@ -203,18 +203,175 @@
 - 主内容区（2 列栅格）
 - 底部导航栏（固定）
 
-## 9. 组件规范（待定）
+## 9. 组件规范
+
+### 9.1 按钮组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 主要 | linear-gradient(135deg, #2DD4A8, #14B8A6) | linear-gradient(135deg, #D4AF37, #F0D060) | 主要操作 |
+| 次要 | transparent + border #2DD4A8 | transparent + border #D4AF37 | 次要操作 |
+| 危险 | linear-gradient(135deg, #E85D5D, #DC2626) | 同浅色 | 危险操作 |
+| 幽灵 | transparent | transparent | 弱化操作 |
+| 玻璃 | rgba(255,255,255,0.8) + backdrop-blur | rgba(45,45,45,0.8) + backdrop-blur | 特殊场景 |
+
+#### 尺寸
+
+| 尺寸 | 桌面端 | 移动端 |
+|------|--------|--------|
+| sm | h: 32px, padding: 8px 16px | h: 36px, padding: 10px 20px |
+| md | h: 36px, padding: 10px 20px | h: 40px, padding: 12px 24px |
+| lg | h: 40px, padding: 12px 24px | h: 44px, padding: 14px 28px |
+
+#### 交互
+
+- 桌面端：hover translateY(-2px) + boxShadow
+- 移动端：active scale(0.95) + opacity(0.9)
+- 动画：150ms ease-out
+
+#### CSS 变量
+
+```css
+--btn-radius: 12px;
+--btn-font-weight: 600;
+--btn-transition: all 0.15s ease-out;
+--btn-hover-transform: translateY(-2px);
+--btn-active-transform: scale(0.95);
+```
+
+### 9.2 输入框组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 默认 | border: 2px solid #E8E4D8 | border: 2px solid #3D3D3D | 常规输入 |
+| 聚焦 | border: 2px solid #2DD4A8 + shadow | border: 2px solid #D4AF37 + shadow | 聚焦状态 |
+| 错误 | border: 2px solid #E85D5D | 同浅色 | 错误状态 |
+| 禁用 | bg: #F9FAFB, opacity: 0.5 | bg: #1A1A1A | 禁用状态 |
+
+#### 尺寸
+
+| 尺寸 | 桌面端 | 移动端 |
+|------|--------|--------|
+| sm | h: 32px, padding: 8px 12px | h: 36px, padding: 10px 14px |
+| md | h: 36px, padding: 10px 14px | h: 40px, padding: 12px 16px |
+| lg | h: 40px, padding: 12px 16px | h: 44px, padding: 14px 18px |
+
+#### 类型
+
+- 文本输入
+- 密码输入（带眼睛图标）
+- 搜索输入（圆角胶囊）
+- 多行文本
+
+#### CSS 变量
+
+```css
+--input-radius: 12px;
+--input-border: 2px solid var(--color-border);
+--input-transition: all 0.2s ease-out;
+--input-focus-shadow: 0 0 0 4px rgba(主色, 0.1);
+```
+
+### 9.3 卡片组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 基础 | bg: white, border: 1px solid #E8E4D8 | bg: #2D2D2D, border: 1px solid #3D3D3D | 常规卡片 |
+| 阴影 | box-shadow: 0 4px 16px rgba(0,0,0,0.08) | box-shadow: 0 4px 16px rgba(0,0,0,0.3) | 浮动卡片 |
+| 玻璃 | backdrop-filter: blur(20px) | 同浅色 | 特殊效果 |
+| 渐变边框 | 渐变边框装饰 | 金色光晕装饰 | 强调卡片 |
+
+#### 类型
+
+- 内容卡片（带标题、内容、操作按钮）
+- 图片卡片（带图片区域）
+- 列表卡片（带列表项）
+
+#### 交互
+
+- 桌面端：hover translateY(-4px) + boxShadow
+- 移动端：active scale(0.98)
+- 动画：300ms ease-out
+
+#### CSS 变量
+
+```css
+--card-radius: 16px;
+--card-padding: 20px;
+--card-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+--card-border: 1px solid var(--color-border);
+--card-bg: var(--color-bg-card);
+--card-hover-transform: translateY(-4px);
+--card-active-transform: scale(0.98);
+--card-transition: all 0.3s ease-out;
+```
+
+### 9.4 提示组件 (Toast/Message)
+
+#### 变体
+
+| 变体 | 背景色 | 边框色 | 图标色 | 用途 |
+|------|--------|--------|--------|------|
+| 成功 | #F0FFF4 | #C6F6D5 | #52C41A | 操作成功 |
+| 警告 | #FFFBEB | #FDE68A | #FAAD14 | 警告提示 |
+| 错误 | #FEF2F2 | #FECACA | #E85D5D | 操作失败 |
+| 信息 | #EFF6FF | #BFDBFE | #1890FF | 信息提示 |
+
+#### CSS 变量
+
+```css
+--toast-radius: 12px;
+--toast-padding: 12px 16px;
+--toast-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+--toast-success-bg: #F0FFF4;
+--toast-warning-bg: #FFFBEB;
+--toast-error-bg: #FEF2F2;
+--toast-info-bg: #EFF6FF;
+```
+
+### 9.5 加载组件 (Spinner/Loading)
+
+#### 类型
+
+| 类型 | 说明 | 用途 |
+|------|------|------|
+| 旋转加载 | 圆形旋转动画 | 常规加载 |
+| 点状加载 | 三个点跳动动画 | 轻量加载 |
+| 进度条 | 带进度的条形动画 | 文件上传等 |
+| 骨架屏 | 内容占位动画 | 页面加载 |
+
+#### CSS 变量
+
+```css
+--loading-spinner-size: 24px;
+--loading-spinner-width: 3px;
+--loading-spinner-color: var(--color-primary);
+--loading-spinner-track: #E8E4D8;
+--loading-dot-size: 8px;
+--loading-dot-color: var(--color-primary);
+--loading-progress-height: 8px;
+--loading-progress-bg: #E8E4D8;
+--loading-progress-color: var(--color-primary);
+--loading-skeleton-bg: #E8E4D8;
+```
+
+### 9.6 待定义组件
 
 以下组件需要进一步定义：
 
-- [ ] 按钮组件
-- [ ] 输入框组件
-- [ ] 卡片组件
 - [ ] 导航组件
 - [ ] 模态框组件
 - [ ] 下拉菜单组件
 - [ ] 表格组件
 - [ ] 列表组件
+- [ ] 头像组件
+- [ ] 标签组件
 
 ## 10. 设计原则
 

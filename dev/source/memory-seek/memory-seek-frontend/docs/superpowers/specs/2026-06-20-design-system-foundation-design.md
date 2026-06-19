@@ -361,17 +361,114 @@
 --loading-skeleton-bg: #E8E4D8;
 ```
 
-### 9.6 待定义组件
+### 9.6 模态框组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 基础 | bg: white, shadow: 0 20px 60px | bg: #2D2D2D, shadow: 0 20px 60px | 常规模态框 |
+| 确认框 | 红色按钮 | 同浅色 | 危险操作确认 |
+| 信息框 | 蓝色图标 | 同浅色 | 提示信息 |
+
+#### 尺寸
+
+| 尺寸 | 宽度 | 用途 |
+|------|------|------|
+| sm | 320px | 简单确认 |
+| md | 480px | 常规内容 |
+| lg | 640px | 复杂表单 |
+| xl | 800px | 大量内容 |
+
+#### 移动端适配
+
+- 全屏模态框
+- 底部弹出框
+
+#### CSS 变量
+
+```css
+--modal-radius: 20px;
+--modal-padding: 32px;
+--modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+--modal-sm: 320px;
+--modal-md: 480px;
+--modal-lg: 640px;
+--modal-xl: 800px;
+--modal-overlay-bg: rgba(0, 0, 0, 0.5);
+--modal-transition: all 0.3s ease-out;
+```
+
+### 9.7 抽屉组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 侧边抽屉 | bg: white, shadow: -4px 0 16px | bg: #2D2D2D, shadow: -4px 0 16px | 导航、设置 |
+| 底部抽屉 | bg: white, radius: 16px 16px 0 0 | bg: #2D2D2D | 操作菜单 |
+
+#### 尺寸
+
+| 尺寸 | 宽度 | 用途 |
+|------|------|------|
+| sm | 240px | 简单导航 |
+| md | 280px | 常规菜单 |
+| lg | 320px | 设置面板 |
+| xl | 400px | 复杂内容 |
+
+#### CSS 变量
+
+```css
+--drawer-bg: var(--color-bg-card);
+--drawer-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+--drawer-sm: 240px;
+--drawer-md: 280px;
+--drawer-lg: 320px;
+--drawer-xl: 400px;
+--drawer-overlay-bg: rgba(0, 0, 0, 0.5);
+--drawer-transition: transform 0.3s ease-out;
+```
+
+### 9.8 下拉菜单组件
+
+#### 变体
+
+| 变体 | 浅色模式 | 深色模式 | 用途 |
+|------|----------|----------|------|
+| 选择器 | bg: white, border: 2px solid | bg: #2D2D2D, border: 2px solid | 选项选择 |
+| 菜单 | bg: white, shadow | bg: #2D2D2D, shadow | 操作菜单 |
+| Popover | bg: white, shadow | bg: #2D2D2D, shadow | 信息提示 |
+
+#### 位置
+
+- 下方 / 上方 / 左侧 / 右侧
+
+#### CSS 变量
+
+```css
+--dropdown-bg: var(--color-bg-card);
+--dropdown-radius: 12px;
+--dropdown-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+--dropdown-item-hover-bg: var(--color-primary-light);
+--dropdown-offset: 8px;
+--dropdown-transition: all 0.2s ease-out;
+```
+
+### 9.9 待定义组件
 
 以下组件需要进一步定义：
 
 - [ ] 导航组件
-- [ ] 模态框组件
-- [ ] 下拉菜单组件
 - [ ] 表格组件
 - [ ] 列表组件
 - [ ] 头像组件
 - [ ] 标签组件
+- [ ] 工具提示组件
+- [ ] 标签页组件
+- [ ] 分页组件
+- [ ] 面包屑组件
+- [ ] 开关组件
 
 ## 10. 设计原则
 

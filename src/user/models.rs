@@ -1,10 +1,12 @@
 //! 用户相关类型定义
 
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 use validator::Validate;
 
 /// 更新用户信息请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateUserParam {
     /// 昵称
@@ -17,7 +19,8 @@ pub struct UpdateUserParam {
 }
 
 /// 修改密码请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct ChangePasswordParam {
     /// 旧密码
@@ -30,7 +33,8 @@ pub struct ChangePasswordParam {
 }
 
 /// 用户信息响应
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDTO {
     /// 用户 ID

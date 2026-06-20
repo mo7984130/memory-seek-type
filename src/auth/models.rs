@@ -2,10 +2,12 @@
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 use validator::Validate;
 
 /// 登录请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct LoginParam {
     /// 账号（用户名或邮箱）
@@ -18,7 +20,8 @@ pub struct LoginParam {
 }
 
 /// 注册请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct RegisterParam {
     /// 用户名
@@ -47,7 +50,8 @@ pub struct RegisterParam {
 }
 
 /// 发送邮箱验证码请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct SendEmailCodeParam {
     /// 邮箱
@@ -56,7 +60,8 @@ pub struct SendEmailCodeParam {
 }
 
 /// 访问令牌结果
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct AccessTokenResult {
     /// 访问令牌

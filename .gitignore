@@ -1,6 +1,7 @@
 /target
 /Cargo.lock
 /models
+/bindings
 **/.DS_Store
 **/logs
 config.json

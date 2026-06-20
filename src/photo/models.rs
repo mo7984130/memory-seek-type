@@ -1,10 +1,12 @@
 //! 照片相关类型定义
 
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 use validator::Validate;
 
 /// 上传照片请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct UploadPhotoParam {
     /// 照片标题
@@ -21,7 +23,8 @@ pub struct UploadPhotoParam {
 }
 
 /// 创建收藏夹请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateCollectionParam {
     /// 收藏夹名称
@@ -34,7 +37,8 @@ pub struct CreateCollectionParam {
 }
 
 /// 添加评论请求参数
-#[derive(Debug, Validate, Serialize, Deserialize)]
+#[derive(Debug, Validate, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct AddCommentParam {
     /// 评论内容
@@ -43,7 +47,8 @@ pub struct AddCommentParam {
 }
 
 /// 照片信息响应
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct PhotoDTO {
     /// 照片 ID
@@ -72,7 +77,8 @@ pub struct PhotoDTO {
 }
 
 /// 收藏夹信息响应
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct CollectionDTO {
     /// 收藏夹 ID
@@ -95,7 +101,8 @@ pub struct CollectionDTO {
 }
 
 /// 评论信息响应
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentDTO {
     /// 评论 ID

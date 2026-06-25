@@ -7,7 +7,7 @@ use ts_rs::TS;
 // 导入所有需要导出的类型
 use memory_seek_type::auth::models::{LoginRequest, LoginResponse, RegisterRequest, SendEmailCodeRequest};
 use memory_seek_type::photo::models::{AddCommentParam, CollectionDTO, CommentDTO, CreateCollectionParam, PhotoDTO, UploadPhotoParam};
-use memory_seek_type::user::models::{ChangePasswordParam, UpdateUserParam, UserDTO};
+use memory_seek_type::user::models::{GetUserResponse, UpdateUserRequest, UpdateUserResponse, UserInfo};
 
 fn main() {
     println!("正在导出 TypeScript 类型定义...");
@@ -39,9 +39,10 @@ fn main() {
 
     // 导出 user 类型
     let user_dir = format!("{}/user", base_dir);
-    UpdateUserParam::export_all_to(&user_dir).expect("导出 UpdateUserParam 失败");
-    ChangePasswordParam::export_all_to(&user_dir).expect("导出 ChangePasswordParam 失败");
-    UserDTO::export_all_to(&user_dir).expect("导出 UserDTO 失败");
+    UserInfo::export_all_to(&user_dir).expect("导出 UserInfo 失败");
+    GetUserResponse::export_all_to(&user_dir).expect("导出 GetUserResponse 失败");
+    UpdateUserRequest::export_all_to(&user_dir).expect("导出 UpdateUserRequest 失败");
+    UpdateUserResponse::export_all_to(&user_dir).expect("导出 UpdateUserResponse 失败");
 
     println!("✅ TypeScript 类型已导出到 {}/ 目录（按模块分目录）", base_dir);
 }

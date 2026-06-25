@@ -1,5 +1,4 @@
-//! 认证模块
+//! 认证相关类型定义
 
 pub mod models;
-
-pub use models::*;
+pub mod validators;

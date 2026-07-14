@@ -1,79 +1,48 @@
-<picture>
-    <source srcset="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_Solid_White.svg" media="(prefers-color-scheme: dark)">
-    <img src="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_RGB.svg" alt="Leptos Logo">
-</picture>
+# memory-seek-frontend
 
-# Leptos Client-Side Rendered (CSR) App Starter Template
+This template should help get you started developing with Vue 3 in Vite.
 
-This is a template for use with the [Leptos][Leptos] web framework using the [Trunk][Trunk] tool to compile and serve your app in development.
+## Recommended IDE Setup
 
-## Creating your repo from the template
+[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-This template requires you to have `cargo-generate` and `trunk` installed. [`leptosfmt`](https://github.com/bram209/leptosfmt) is optional but highly recommended. You can install them with
+## Recommended Browser Setup
 
-```sh
-cargo install cargo-generate trunk leptosfmt
-```
+- Chromium-based browsers (Chrome, Edge, Brave, etc.):
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
+- Firefox:
+  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
 
+## Type Support for `.vue` Imports in TS
 
-To set up your project with this template, run
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-```sh
-cargo generate --git https://github.com/leptos-rs/start-trunk
-```
+## Customize configuration
 
-to generate your new project, then
+See [Vite Configuration Reference](https://vite.dev/config/).
 
-```sh
-cd memory-seek-frontend
-```
-
-to go to your newly created project.
-
-By default, this template uses Rust `nightly` and requires that you've installed the `wasm` compilation target for your toolchain.
-
-
-Sass and Tailwind are also supported by the Trunk build tool, but are optional additions: [see here for more info on how to set those up with Trunk][Trunk-instructions].
-
-
-If you don't have Rust nightly, you can install it with
-```sh
-rustup toolchain install nightly --allow-downgrade
-```
-
-You can add the `wasm` compilation target to rust using
-```sh
-rustup target add wasm32-unknown-unknown
-```
-
-
-## Developing your Leptos CSR project
-
-To develop your Leptos CSR project, running
+## Project Setup
 
 ```sh
-trunk serve --port 3000 --open
+pnpm install
 ```
 
-will open your app in your default browser at `http://localhost:3000`.
-
-
-## Deploying your Leptos CSR project
-
-To build a Leptos CSR app for release, use the command
+### Compile and Hot-Reload for Development
 
 ```sh
-trunk build --release
+pnpm dev
 ```
 
-This will output the files necessary to run your app into the `dist` folder; you can then use any static site host to serve these files.
+### Type-Check, Compile and Minify for Production
 
-For further information about hosting Leptos CSR apps, please refer to [the Leptos Book chapter on deployment available here][deploy-csr].
+```sh
+pnpm build
+```
 
+### Lint with [ESLint](https://eslint.org/)
 
-[Leptos]: https://github.com/leptos-rs/leptos
-
-[Trunk]: https://github.com/trunk-rs/trunk
-[Trunk-instructions]: https://trunk-rs.github.io/trunk/guide/assets/
-
-[deploy-csr]: https://book.leptos.dev/deployment/csr.html
+```sh
+pnpm lint
+```

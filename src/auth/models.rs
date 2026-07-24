@@ -1,10 +1,10 @@
 //! 认证相关类型定义
 
+use super::validators::*;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 use validator::Validate;
-use super::validators::*;
 
 /// 登录请求
 #[derive(Debug, Validate, Serialize, Deserialize, TS)]
@@ -23,11 +23,11 @@ pub struct LoginRequest {
 #[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct LoginResponse {
-    /// 访问令牌
+    pub user: crate::user::UserInfo,
     pub access_token: String,
-
-    /// 访问令牌过期时间
-    pub access_token_expire_at: DateTime<Utc>,
+    pub access_token_expire_at: chrono::DateTime<chrono::Utc>,
+    pub refresh_token: String,
+    pub refresh_token_expire_at: chrono::DateTime<chrono::Utc>,
 }
 
 /// 注册请求

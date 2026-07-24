@@ -1,6 +1,6 @@
 [package]
 name = "memory-seek-type"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Shared types for memory-seek frontend and backend"
 license = "MIT"

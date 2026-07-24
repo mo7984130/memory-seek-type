@@ -201,8 +201,18 @@ mod tests {
         use chrono::TimeZone;
 
         let response = LoginResponse {
+            user: crate::user::UserInfo {
+                id: "user1".to_string(),
+                username: "alice".to_string(),
+                nickname: "Alice".to_string(),
+                email: "alice@example.com".to_string(),
+                avatar_token: None,
+                created_at: Utc.with_ymd_and_hms(2026, 1, 1, 0, 0, 0).unwrap(),
+            },
             access_token: "tok123".to_string(),
             access_token_expire_at: Utc.with_ymd_and_hms(2026, 6, 13, 12, 0, 0).unwrap(),
+            refresh_token: "ref456".to_string(),
+            refresh_token_expire_at: Utc.with_ymd_and_hms(2026, 7, 13, 12, 0, 0).unwrap(),
         };
         let json = serde_json::to_string(&response).unwrap();
         assert!(json.contains("\"accessToken\""));

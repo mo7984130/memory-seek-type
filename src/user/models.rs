@@ -3,6 +3,9 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
+use validator::Validate;
+
+use super::validators::*;
 
 /// 用户信息（返回给前端）
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
@@ -58,6 +61,57 @@ pub struct UpdateUserResponse {
     pub user: UserInfo,
 }
 
+/// 修改密码请求
+#[derive(Debug, Serialize, Deserialize, Validate, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct ChangePasswordParam {
+    #[validate(custom(function = "validate_password"))]
+    pub old_password: String,
+
+    #[validate(custom(function = "validate_password"))]
+    pub new_password: String,
+}
+
+/// 修改昵称请求
+#[derive(Debug, Serialize, Deserialize, Validate, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct ChangeNicknameParam {
+    #[validate(
+        length(min = 1, max = 20, message = "昵称长度在 1 到 20 个字符"),
+        custom(function = "validate_normal_char")
+    )]
+    pub new_nickname: String,
+}
+
+/// 批量获取用户信息请求
+#[derive(Debug, Serialize, Deserialize, Validate, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct GetUserInfoBatchParam {
+    pub user_ids: Vec<String>,
+}
+
+/// 邀请码响应
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct InviterCodeResult {
+    pub inviter_code: String,
+    pub expire_at: DateTime<Utc>,
+}
+
+/// 用户信息响应（批量查询返回）
+#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct UserInfoResult {
+    pub user_id: String,
+    pub nickname: String,
+    pub avatar_token: Option<String>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -90,5 +144,47 @@ mod tests {
         let cloned = user.clone();
         assert_eq!(user.id, cloned.id);
         assert_eq!(user.username, cloned.username);
+    }
+
+    #[test]
+    fn test_change_password_param_valid() {
+        let req = ChangePasswordParam {
+            old_password: "oldPass123".to_string(),
+            new_password: "newPass456".to_string(),
+        };
+        assert!(req.validate().is_ok());
+    }
+
+    #[test]
+    fn test_change_password_param_short() {
+        let req = ChangePasswordParam {
+            old_password: "oldPass123".to_string(),
+            new_password: "a1".to_string(),
+        };
+        assert!(req.validate().is_err());
+    }
+
+    #[test]
+    fn test_change_nickname_param_valid() {
+        let req = ChangeNicknameParam {
+            new_nickname: "Alice".to_string(),
+        };
+        assert!(req.validate().is_ok());
+    }
+
+    #[test]
+    fn test_change_nickname_param_empty() {
+        let req = ChangeNicknameParam {
+            new_nickname: "".to_string(),
+        };
+        assert!(req.validate().is_err());
+    }
+
+    #[test]
+    fn test_change_nickname_param_special_chars() {
+        let req = ChangeNicknameParam {
+            new_nickname: "test<script>".to_string(),
+        };
+        assert!(req.validate().is_err());
     }
 }

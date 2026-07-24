@@ -5,7 +5,7 @@
 use ts_rs::TS;
 
 // 导入所有需要导出的类型
-use memory_seek_type::auth::models::{LoginRequest, LoginResponse, RegisterRequest, SendEmailCodeRequest};
+use memory_seek_type::auth::models::{LoginRequest, LoginResponse, RefreshAccessTokenResponse, RegisterRequest, SendEmailCodeRequest};
 use memory_seek_type::photo::models::{AddCommentParam, CollectionDTO, CommentDTO, CreateCollectionParam, PhotoDTO, UploadPhotoParam};
 use memory_seek_type::user::models::{GetUserResponse, UpdateUserRequest, UpdateUserResponse, UserInfo};
 
@@ -27,6 +27,7 @@ fn main() {
     RegisterRequest::export_all_to(&auth_dir).expect("导出 RegisterRequest 失败");
     SendEmailCodeRequest::export_all_to(&auth_dir).expect("导出 SendEmailCodeRequest 失败");
     LoginResponse::export_all_to(&auth_dir).expect("导出 LoginResponse 失败");
+    RefreshAccessTokenResponse::export_all_to(&auth_dir).expect("导出 RefreshAccessTokenResponse 失败");
 
     // 导出 photo 类型
     let photo_dir = format!("{}/photo", base_dir);

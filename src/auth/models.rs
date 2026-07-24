@@ -30,6 +30,18 @@ pub struct LoginResponse {
     pub refresh_token_expire_at: chrono::DateTime<chrono::Utc>,
 }
 
+
+/// Token 刷新响应
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct RefreshAccessTokenResponse {
+    /// 访问令牌
+    pub access_token: String,
+    /// 访问令牌过期时间
+    pub access_token_expire_at: DateTime<Utc>,
+}
+
 /// 注册请求
 #[derive(Debug, Validate, Serialize, Deserialize, TS)]
 #[ts(export)]
